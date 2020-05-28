@@ -8573,10 +8573,10 @@ var PCCViewer = window.PCCViewer || {};
 
                     control.refreshConversations();
 
-                    notify({
-                        message: language.annotations.save.success + currentLayer.getName(),
-                        type: 'success'
-                    });
+                    // notify({
+                    //     message: language.annotations.save.success + currentLayer.getName(),
+                    //     type: 'success'
+                    // });
                 };
             }
 
