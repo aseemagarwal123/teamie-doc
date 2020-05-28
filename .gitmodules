@@ -1,0 +1,4 @@
+[submodule "prizmdoc-viewer"]
+	path = prizmdoc-viewer
+	url = https://github.com/aseemagarwal123/prizmdoc-viewer.git
+	branch = master
