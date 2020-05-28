@@ -1,0 +1,36 @@
+diff -r b3f8b25ddb7e -r a629bd451cfa viewer-assets/js/viewer.js
+--- a/viewer-assets/js/viewer.js	Fri Dec 01 18:29:55 2017 +0800
++++ b/viewer-assets/js/viewer.js	Tue Dec 19 12:33:45 2017 +0800
+@@ -8025,10 +8025,10 @@
+ 
+                     control.refreshConversations();
+ 
+-                    notify({
+-                        message: language.annotations.save.success + currentLayer.getName(),
+-                        type: 'success'
+-                    });
++                    // notify({
++                    //     message: language.annotations.save.success + currentLayer.getName(),
++                    //     type: 'success'
++                    // });
+                 };
+             }
+ 
+@@ -9245,7 +9245,7 @@
+                     // add this for text selection only
+                     return !!actionsFilter.highlight && event.toLowerCase() === PCCViewer.EventType.TextSelected.toLowerCase();
+                 }
+-            },{
++            },/*{
+                 name: "Redact",
+                 languageKey: "redact",
+                 action: function(ev){
+@@ -9270,7 +9270,7 @@
+                     // add this for text selection only
+                     return !!actionsFilter.redact && event.toLowerCase() === PCCViewer.EventType.TextSelected.toLowerCase();
+                 }
+-            },{
++            },*/{
+                 name: "Hyperlink",
+                 languageKey: "hyperlink",
+                 action: function(ev){

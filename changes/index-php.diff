@@ -1,0 +1,197 @@
+diff -r b3f8b25ddb7e -r a629bd451cfa index.php
+--- a/index.php	Fri Dec 01 18:29:55 2017 +0800
++++ b/index.php	Tue Dec 19 12:33:45 2017 +0800
+@@ -10,29 +10,29 @@
+     $tplName = str_ireplace('template.html', '', $filename);
+     $tplFile = preg_replace("/\s+/", " ", file_get_contents($filepath));
+     $tpls[$tplName] = $tplFile;
+-}
+-?>
++} ?>
+ <!DOCTYPE html>
+ <html lang="en">
+-<head id="Head1">
++<head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+-    <title>PrizmDoc Full Viewer PHP Sample</title>
++    <title>Teamie Viewer</title>
+     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+ 
+     <link rel="stylesheet" href="viewer-assets/css/normalize.min.css"/>
+     <link rel="stylesheet" href="viewer-assets/css/viewercontrol.css"/>
+     <link rel="stylesheet" href="viewer-assets/css/viewer.css"/>
++    <link rel="stylesheet" href="./min.css"/>
+ 
+     <script type="text/javascript">
+         var PCCViewer = window.PCCViewer || {};
++        window.tpls = <?php echo json_encode($tpls) ?>;
+     </script>
+ 
++
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+-    <script>window.jQuery || document.write('<script src="viewer-assets/js/jquery-1.10.2.min.js"><\/script>');</script>
+     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+-    <script>window._ || document.write('<script src="viewer-assets/js/underscore.min.js"><\/script>');</script>
+     <script src="viewer-assets/js/jquery.hotkeys.min.js"></script>
+ 
+     <!--[if lt IE 9]>
+@@ -45,10 +45,12 @@
+ 
+     <!-- Configuration information used for this sample. -->
+     <script src="sample-config.js"></script>
++
+ </head>
+ <body>
+-
+-    <div id="viewer1"></div>
++    <div class="viewerWrapper">
++        <div id="viewer"></div>
++    </div>
+ 
+     <div id="attachments" style="display:none;">
+         <b>Attachments:</b>
+@@ -56,141 +58,6 @@
+         </p>
+     </div>
+ 
+-    <script>
+-        jQuery(function($) {
+-            var query = (function parseQuery() {
+-                var query = {};
+-                var temp = window.location.search.substring(1).split('&');
+-                for (var i = temp.length; i--;) {
+-                    var q = temp[i].split('=');
+-                    query[q.shift()] = decodeURIComponent(q.join('='));
+-                }
+-                return query;
+-            })();
+-
+-            // setup -- you probably already have this, so you can ignore it
+-            function createSession(data) {
+-                if (data.viewingSessionId) {
+-                    return data.viewingSessionId;
+-                }
+-
+-                return $.ajax({
+-                    url: sampleConfig.imageHandlerUrl + '/ViewingSession',
+-                    method: 'POST',
+-                    contentType: 'application/json',
+-                    data: JSON.stringify(data)
+-                }).then(function (response) {
+-                    return response.viewingSessionId || response.documentID;
+-                });
+-            }
+-
+-            function getTemplate(templateName) {
+-                return $.ajax({url: templateName})
+-                    .then(function (response) {
+-                        return response;
+-                    });
+-            }
+-
+-            function getJson(fileName) {
+-                return $.ajax({ url: fileName })
+-                    .then(function (response) {
+-                        // IIS Express will not use the correct MIME type for json, so we may need to parse it as a string
+-                        if (typeof response === 'string') {
+-                            return JSON.parse(response);
+-                        }
+-
+-                        return response;
+-                    });
+-            }
+-
+-            function getDocumentSource(documentQuery) {
+-                var source = {};
+-
+-                if (documentQuery && documentQuery.search(/^https?:\/\//) === 0) {
+-                    source.type = 'url';
+-                    source.url = documentQuery;
+-                } else {
+-                    source.type = 'document';
+-                    source.fileName = documentQuery || 'PdfDemoSample.pdf';
+-                }
+-
+-                return source;
+-            }
+-
+-            function getResourcesAndEmbedViewer(demoConfig) {
+-                var sessionData = {};
+-
+-                if (query.viewingSessionId) {
+-                    sessionData.viewingSessionId = query.viewingSessionId;
+-                } else {
+-                    sessionData.source = getDocumentSource(query.document);
+-                }
+-
+-                $.when(
+-                    sessionData.document, // args[0]
+-                    createSession(sessionData), // args[1]
+-                    <?php echo json_encode($tpls) ?>, // args[2]
+-                    getJson(sampleConfig.viewerAssetsPath + '/languages/' + sampleConfig.languageFile), // args[3]
+-                    getJson('redactionReason.json'), // args[4]
+-                    getJson('predefinedSearch.json'), // args[5]
+-                    demoConfig.options || {}) // args[6]
+-                    .done(buildViewerOptions);
+-            }
+-
+-            function buildViewerOptions() {
+-                var args = [].slice.call(arguments);
+-
+-                var optionsOverride = args.pop(); // always last arg
+-
+-                var options = {
+-                    annotationsMode: "LayeredAnnotations",
+-                    documentID: encodeURIComponent(args[1]),
+-                    language: args[3],
+-                    predefinedSearch: args[5],
+-                    template: args[2],
+-                    signatureCategories: 'Signature,Initials,Title',
+-                    immediateActionMenuMode: 'hover',
+-                    redactionReasons: args[4],
+-                    documentDisplayName: args[0],
+-                    uiElements: {
+-                        download: true,
+-                        fullScreenOnInit: true,
+-                        advancedSearch: true,
+-                        attachments: true
+-                    },
+-                    discardOutOfViewText: true
+-                };
+-
+-                var combinedOptions = _.extend(optionsOverride, options);
+-
+-                embedViewer(combinedOptions);
+-            }
+-
+-            function embedViewer(options) {
+-                var viewer = $('#viewer1').pccViewer(options);
+-		console.log(viewer.viewerControl.getActiveMarkupLayer());
+-var layer = viewer.viewerControl.getActiveMarkupLayer();
+-
+-viewer.viewerControl.saveMarkupLayer(layer.getId()).then(
+-    function onSuccess(layerInfo){
+-        console.log('layer saved successfully', layerInfo.layerRecordId);
+-    },
+-    function onFailure(reason){
+-        console.log('layer failed to save:', reason.code, reason.message);
+-    }
+-);
+-            }
+-
+-            getResourcesAndEmbedViewer({
+-                options: {
+-                    imageHandlerUrl: sampleConfig.imageHandlerUrl,
+-                    resourcePath: sampleConfig.viewerAssetsPath + '/img'
+-                }
+-            });
+-        });
+-    </script>
+-    <script type="text/javascript">
+-    	console.log(window.PCCViewer.ViewerControl.getActiveMarkupLayer);
+-    </script>
++    <script src="./min.js"></script>
+ </body>
+ </html>

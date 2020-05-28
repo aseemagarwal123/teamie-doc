@@ -1,0 +1,246 @@
+diff -r b3f8b25ddb7e -r a629bd451cfa viewer-assets/templates/viewerTemplate.html
+--- a/viewer-assets/templates/viewerTemplate.html	Fri Dec 01 18:29:55 2017 +0800
++++ b/viewer-assets/templates/viewerTemplate.html	Tue Dec 19 12:33:45 2017 +0800
+@@ -7,14 +7,10 @@
+         <div class="pcc-tab-pane">
+             <div class="pcc-pull-right">
+                 <button data-pcc-toggle="dialog-attachments" data-pcc-removable-id="attachments" class="pcc-icon pcc-icon-paperclip pcc-hide" title="<%= attachments.tooltip %>"></button>
+-                <button class="pcc-icon pcc-icon-print" title="<%= printButton %>" data-pcc-print="launch" data-pcc-removable-id="printing"></button>
+                 <button data-pcc-toggle="dialog-download" data-pcc-removable-id="download" class="pcc-icon pcc-icon-download" title="<%= download %>"></button>
+             </div>
+             <div class="pcc-left">
+-                <button data-pcc-toggle="dialog-thumbnails" class="pcc-icon pcc-icon-thumbnails" title="<%= thumbnails %>"></button>
+-                <button data-pcc-mouse-tool="AccusoftMagnifier" class="pcc-icon pcc-icon-magnifiertool" title="<%= magnifierTool %>"></button>
+                 <button data-pcc-mouse-tool="AccusoftSelectToZoom" class="pcc-icon pcc-icon-rectanglezoomtool" title="<%= rectangleZoom %>"></button>
+-                <button data-pcc-rotate-document class="pcc-icon pcc-icon-rotate-doc-cw" title="<%= rotateDocument %>"></button>
+                 <button data-pcc-rotate-page class="pcc-icon pcc-icon-rotate-page-cw" title="<%= rotatePage %>"></button>
+             </div>
+         </div>
+@@ -25,6 +21,68 @@
+         </div>
+     </div>
+ 
++
++    <div class="pcc-tab" data-pcc-nav-tab="annotate" data-pcc-removable-id="annotateTab">
++        <div class="pcc-tab-item"><span class="pcc-icon pcc-icon-annotate"></span> <%= annotateLabel %></div>
++        <div class="pcc-tab-pane pcc-tab-advanced">
++            <div class="pcc-pull-right">
++                <button data-pcc-toggle="dialog-save-annotations" class="pcc-icon pcc-icon-save" title="<%= saveAnnotations %>"></button>
++                <!-- <button data-pcc-lock-editable-layer data-pcc-toggle="dialog-load-annotations" class="pcc-icon pcc-icon-load" title="<%= loadAnnotations %>"></button> -->
++                <button data-pcc-comments-panel class="pcc-icon pcc-icon-comment" title="<%= commentsPanel %>"></button>
++                <button data-pcc-toggle="dialog-download" data-pcc-removable-id="download" class="pcc-icon pcc-icon-download" title="<%= download %>"></button>
++            </div>
++            <div class="pcc-left">
++
++                <% if (annotationsMode === "LayeredAnnotations") { %>
++                <!-- <button data-pcc-toggle="dialog-annotation-layer-review" class="pcc-icon pcc-icon-list" title="<%= annotationLayerReview.annotationLayers %>"></button>
++                <span class="pcc-separator"></span> -->
++                <% } %>
++
++                <button data-pcc-mouse-tool="AccusoftSelectText" class="pcc-icon pcc-icon-texttool pcc-disabled" title="<%= selectText %>" data-pcc-removable-id="copyPaste"></button>
++
++                <button data-pcc-mouse-tool="AccusoftArrowAnnotation" data-pcc-default-fill-color="#0000ff"
++                    class="pcc-icon pcc-icon-annotate-arrow" title="<%= arrowAnnotation %>"></button>
++
++                <button data-pcc-mouse-tool="AccusoftLineAnnotation" data-pcc-default-fill-color="#ff0000" data-pcc-context-menu="true"
++                    class="pcc-icon pcc-icon-annotate-line" title="<%= lineAnnotation %>"></button>
++
++                <button data-pcc-mouse-tool="AccusoftRectangleAnnotation" data-pcc-default-fill-color="#ff0000"
++                    class="pcc-icon pcc-icon-annotate-rectangle" title="<%= rectangleAnnotation %>"></button>
++
++                <button data-pcc-mouse-tool="AccusoftEllipseAnnotation" data-pcc-default-fill-color="#ff0000"
++                    class="pcc-icon pcc-icon-annotate-ellipse" title="<%= ellipseAnnotation %>"></button>
++
++                <button data-pcc-mouse-tool="AccusoftFreehandAnnotation" data-pcc-default-fill-color="#ff0000" data-pcc-context-menu="true"
++                    class="pcc-icon pcc-icon-annotate-freehand" title="<%= freehandAnnotation %>"></button>
++
++                <button data-pcc-toggle="more-annotation-tools" class="pcc-icon pcc-icon-triangle-down pcc-mobile-overflow-trigger" title="<%= moreTools %>"></button>
++
++                <div class="pcc-more-annotation-tools pcc-mobile-overflow" data-pcc-toggle-id="more-annotation-tools">
++                    <!-- <button data-pcc-mouse-tool="AccusoftPolylineAnnotation" data-pcc-default-fill-color="#000000" data-pcc-context-menu="true"
++                        class="pcc-icon pcc-icon-annotate-polyline" title="<%= polylineAnnotation %>"></button> -->
++
++                <button data-pcc-mouse-tool="AccusoftTextAnnotation" data-pcc-default-fill-color="#ffffff"
++                    class="pcc-icon pcc-icon-annotate-text" title="<%= textAnnotation %>"></button>
++
++                <button data-pcc-mouse-tool="AccusoftHighlightAnnotation" data-pcc-default-fill-color="#ffff00"
++                    class="pcc-icon pcc-icon-highlight pcc-disabled" title="<%= highlightAnnotation %>"></button>
++
++                <button data-pcc-mouse-tool="AccusoftStrikethroughAnnotation" class="pcc-icon pcc-icon-text-strikeout pcc-disabled" title="<%= strikethroughAnnotation %>"></button>
++
++                <button data-pcc-mouse-tool="AccusoftTextHyperlinkAnnotation"
++                        class="pcc-icon pcc-icon-link pcc-disabled" title="<%= textHyperlinkAnnotation %>"></button>
++
++                <button data-pcc-mouse-tool="AccusoftStampAnnotation" data-pcc-default-fill-color="#ff0000" data-pcc-default-label="<%= stampLabelApproved %>"
++                    class="pcc-icon pcc-icon-annotate-stamp" title="<%= stampAnnotation %>"></button>
++
++                    <button data-pcc-mouse-tool="AccusoftImageStampAnnotation" data-pcc-context-menu="true"
++                    class="pcc-icon pcc-icon-check" title="<%= imageStampAnnotion %>" disabled></button>
++
++                </div>
++            </div>
++        </div>
++    </div>
++
+     <div class="pcc-tab" data-pcc-nav-tab="search" data-pcc-removable-id="searchTab">
+         <div class="pcc-tab-item"><span class="pcc-icon pcc-icon-search"></span> <%= search %></div>
+         <div class="pcc-tab-pane pcc-tab-advanced">
+@@ -79,65 +137,6 @@
+         </div>
+     </div>
+ 
+-    <div class="pcc-tab" data-pcc-nav-tab="annotate" data-pcc-removable-id="annotateTab">
+-        <div class="pcc-tab-item"><span class="pcc-icon pcc-icon-annotate"></span> <%= annotateLabel %></div>
+-        <div class="pcc-tab-pane pcc-tab-advanced">
+-            <div class="pcc-pull-right">
+-                <button data-pcc-toggle="dialog-save-annotations" class="pcc-icon pcc-icon-save" title="<%= saveAnnotations %>"></button>
+-                <button data-pcc-lock-editable-layer data-pcc-toggle="dialog-load-annotations" class="pcc-icon pcc-icon-load" title="<%= loadAnnotations %>"></button>
+-                <button data-pcc-comments-panel class="pcc-icon pcc-icon-comment" title="<%= commentsPanel %>"></button>
+-                <button data-pcc-toggle="dialog-download" data-pcc-removable-id="download" class="pcc-icon pcc-icon-download" title="<%= download %>"></button>
+-            </div>
+-            <div class="pcc-left">
+-
+-                <% if (annotationsMode === "LayeredAnnotations") { %>
+-                <button data-pcc-toggle="dialog-annotation-layer-review" class="pcc-icon pcc-icon-list" title="<%= annotationLayerReview.annotationLayers %>"></button>
+-                <span class="pcc-separator"></span>
+-                <% } %>
+-
+-                <button data-pcc-mouse-tool="AccusoftArrowAnnotation" data-pcc-default-fill-color="#0000ff"
+-                    class="pcc-icon pcc-icon-annotate-arrow" title="<%= arrowAnnotation %>"></button>
+-
+-                <button data-pcc-mouse-tool="AccusoftLineAnnotation" data-pcc-default-fill-color="#ff0000" data-pcc-context-menu="true"
+-                    class="pcc-icon pcc-icon-annotate-line" title="<%= lineAnnotation %>"></button>
+-
+-                <button data-pcc-mouse-tool="AccusoftRectangleAnnotation" data-pcc-default-fill-color="#ff0000"
+-                    class="pcc-icon pcc-icon-annotate-rectangle" title="<%= rectangleAnnotation %>"></button>
+-
+-                <button data-pcc-mouse-tool="AccusoftEllipseAnnotation" data-pcc-default-fill-color="#ff0000"
+-                    class="pcc-icon pcc-icon-annotate-ellipse" title="<%= ellipseAnnotation %>"></button>
+-
+-                <button data-pcc-mouse-tool="AccusoftFreehandAnnotation" data-pcc-default-fill-color="#ff0000" data-pcc-context-menu="true"
+-                    class="pcc-icon pcc-icon-annotate-freehand" title="<%= freehandAnnotation %>"></button>
+-
+-                <button data-pcc-toggle="more-annotation-tools" class="pcc-icon pcc-icon-triangle-down pcc-mobile-overflow-trigger" title="<%= moreTools %>"></button>
+-
+-                <div class="pcc-more-annotation-tools pcc-mobile-overflow" data-pcc-toggle-id="more-annotation-tools">
+-                    <button data-pcc-mouse-tool="AccusoftPolylineAnnotation" data-pcc-default-fill-color="#000000" data-pcc-context-menu="true"
+-                        class="pcc-icon pcc-icon-annotate-polyline" title="<%= polylineAnnotation %>"></button>
+-
+-                <button data-pcc-mouse-tool="AccusoftTextAnnotation" data-pcc-default-fill-color="#ffffff"
+-                    class="pcc-icon pcc-icon-annotate-text" title="<%= textAnnotation %>"></button>
+-
+-                <button data-pcc-mouse-tool="AccusoftHighlightAnnotation" data-pcc-default-fill-color="#ffff00"
+-                    class="pcc-icon pcc-icon-highlight pcc-disabled" title="<%= highlightAnnotation %>"></button>
+-
+-                <button data-pcc-mouse-tool="AccusoftStrikethroughAnnotation" class="pcc-icon pcc-icon-text-strikeout pcc-disabled" title="<%= strikethroughAnnotation %>"></button>
+-
+-                <button data-pcc-mouse-tool="AccusoftTextHyperlinkAnnotation"
+-                        class="pcc-icon pcc-icon-link pcc-disabled" title="<%= textHyperlinkAnnotation %>"></button>
+-
+-                <button data-pcc-mouse-tool="AccusoftStampAnnotation" data-pcc-default-fill-color="#ff0000" data-pcc-default-label="<%= stampLabelApproved %>"
+-                    class="pcc-icon pcc-icon-annotate-stamp" title="<%= stampAnnotation %>"></button>
+-
+-                    <button data-pcc-mouse-tool="AccusoftImageStampAnnotation" data-pcc-context-menu="true"
+-                    class="pcc-icon pcc-icon-image-stamp" title="<%= imageStampAnnotion %>" disabled></button>
+-
+-                </div>
+-            </div>
+-        </div>
+-    </div>
+-
+     <div class="pcc-tab" data-pcc-nav-tab="redact" data-pcc-removable-id="redactTab">
+         <div class="pcc-tab-item"><span class="pcc-icon pcc-icon-redact"></span> <%= redactLabel %></div>
+         <div class="pcc-tab-pane">
+@@ -186,6 +185,10 @@
+     </div>
+ 
+     <div class="pcc-status-bar">
++        <span style="color: white;font-style: italic;font-size: smaller;">
++            <span id="loadingSpinner" class="pcc-hide pcc-hide-lg">Saving...<i class="pcc-load"></i></span>
++            <span id="statusMessage" class="pcc-hide pcc-hide-lg"></span>
++        </span>
+         <button data-pcc-first-page class="pcc-icon pcc-icon-firstpage" title="<%= firstPage %>"></button>
+         <button data-pcc-prev-page class="pcc-icon pcc-icon-prevpage" title="<%= previousPage %>"></button>
+         <input type="number" value="1" data-pcc-pageSelect autocorrect="off" autocapitalize="off"> <%= of %> <span data-pcc-pagecount>1</span>
+@@ -196,7 +199,6 @@
+ </div>
+ 
+ <div class="pcc-tabset pcc-tools-tabset">
+-    <button data-pcc-mouse-tool="AccusoftSelectText" class="pcc-icon pcc-icon-texttool pcc-disabled" title="<%= selectText %>" data-pcc-removable-id="copyPaste"></button>
+     <button data-pcc-mouse-tool="AccusoftPanAndEdit" class="pcc-icon pcc-icon-pantool pcc-active" title="<%= panTool %>"></button>
+     <button data-pcc-zoom-out class="pcc-icon pcc-icon-zoomout" title="<%= zoomOut %>"></button>
+ 
+@@ -218,7 +220,10 @@
+ 
+     <button data-pcc-zoom-in class="pcc-icon pcc-icon-zoomin" title="<%= zoomIn %>"></button>
+     <button data-pcc-fit-content class="pcc-icon pcc-icon-fitcontent" title="<%= fitContent %>"></button>
+-    <button data-pcc-fullscreen class="pcc-icon pcc-icon-fullscreen pcc-hide pcc-show-lg" title="<%= fullScreen %>"></button>
++    <button data-pcc-toggle="dialog-thumbnails" class="pcc-icon pcc-icon-thumbnails" title="<%= thumbnails %>"></button>
++    <button data-pcc-mouse-tool="AccusoftMagnifier" class="pcc-icon pcc-icon-magnifiertool" title="<%= magnifierTool %>"></button>
++    <button data-pcc-rotate-document class="pcc-icon pcc-icon-rotate-doc-cw" title="<%= rotateDocument %>"></button>
++    <!-- <button data-pcc-fullscreen class="pcc-icon pcc-icon-fullscreen pcc-hide pcc-show-lg" title="<%= fullScreen %>"></button> -->
+ </div>
+ 
+ <div class="pcc-dialog pcc-dialog-thumbnails" data-pcc-toggle-id="dialog-thumbnails">
+@@ -257,7 +262,7 @@
+                 <span></span><label><%= fileDownloadAnnotations %></label>
+             </div>
+         </div>
+-        <div class="pcc-col-6">
++        <!-- <div class="pcc-col-6">
+             <div data-pcc-toggle="dropdown-download-annotations-format" class="pcc-select pcc-disabled">
+                 <div class="pcc-label"><%= fileDownloadAllAnnotations %></div>
+                 <div class="pcc-arrow-down"></div>
+@@ -267,9 +272,9 @@
+                     <% }); %>
+                 </div>
+             </div>
+-        </div>
++        </div> -->
+     </div>
+-    <div class="pcc-row">
++    <!-- <div class="pcc-row">
+         <div data-pcc-checkbox="burnMarks" data-pcc-download-redactions data-pcc-esign-save="true" class="pcc-checkbox pcc-disabled">
+             <span></span><label><%= fileDownloadRedactions %></label>
+         </div>
+@@ -278,7 +283,7 @@
+         <div data-pcc-checkbox="burnMarks" data-pcc-download-esignatures data-pcc-esign-save="true" class="pcc-checkbox pcc-disabled">
+             <span></span><label><%= fileDownloadESignature %></label>
+         </div>
+-    </div>
++    </div> -->
+     <div class="pcc-row">
+         <div class="pcc-col-6">
+             <button data-pcc-download="preview"><%= preview %></button>
+@@ -287,6 +292,9 @@
+             <button data-pcc-download="download"><%= download %></button>
+         </div>
+     </div>
++    <div class="pcc-row">
++        <button title="<%= printButton %>" data-pcc-print="launch" data-pcc-removable-id="printing" id="downloadWithComments">Download with Comments</button>
++    </div>
+ </div>
+ 
+ <div class="pcc-dialog pcc-dialog-search" data-pcc-toggle-id="dialog-search">
+@@ -294,8 +302,8 @@
+         <div class="pcc-search-header pcc-clear">
+             <div class="pcc-pull-right">
+                 <button class="pcc-icon pcc-icon-list" title="<%= searchResults %>" data-pcc-search-container-toggle="results"></button>
+-                <button class="pcc-icon pcc-icon-search-quick-actions pcc-hide" title="<%= searchQuickActions.title %>" data-pcc-search-container-toggle="quick-actions"></button>
+-                <button class="pcc-icon pcc-icon-filter pcc-hide" title="<%= filter %>" data-pcc-search-container-toggle="filter"></button>
++                <!-- <button class="pcc-icon pcc-icon-search-quick-actions pcc-hide" title="<%= searchQuickActions.title %>" data-pcc-search-container-toggle="quick-actions"></button>
++                <button class="pcc-icon pcc-icon-filter pcc-hide" title="<%= filter %>" data-pcc-search-container-toggle="filter"></button> -->
+             </div>
+             <div class="pcc-left">
+                 <span data-pcc-search="resultCount"><%= searchResultsNone %></span>
+@@ -346,8 +354,8 @@
+                 <button class="pcc-icon pcc-icon-page pcc-active" data-pcc-search-in="document" title="<%= searchFilters.searchInDocument %>"></button>
+                 <button class="pcc-icon pcc-icon-comment pcc-active" data-pcc-search-in="comments" title="<%= searchFilters.searchInComments %>"></button>
+                 <button class="pcc-icon pcc-icon-annotate pcc-active" data-pcc-search-in="annotations" title="<%= searchFilters.searchInAnnations %>"></button>
+-                <button class="pcc-icon pcc-icon-redact-pen pcc-active" data-pcc-search-in="redactions" title="<%= searchFilters.searchInRedactions %>"></button>
+-                <button class="pcc-icon pcc-icon-esign pcc-active" data-pcc-search-in="signatures" title="<%= searchFilters.searchInSignatures %>"></button>
++                <button class="pcc-icon pcc-icon-redact-pen" data-pcc-search-in="redactions" title="<%= searchFilters.searchInRedactions %>"></button>
++                <button class="pcc-icon pcc-icon-esign" data-pcc-search-in="signatures" title="<%= searchFilters.searchInSignatures %>"></button>
+             </div>
+ 
+             <div class="pcc-section pcc-expand pcc-hide" data-pcc-section="searchFixedTerms">

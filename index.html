@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 user-scalable=no"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="stylesheet" href="viewer/css/normalize.min.css">
+  <link rel="stylesheet" href="viewer/css/viewercontrol.css">
+  <link rel="stylesheet" href="viewer/css/viewer.css">
+  
+
+<script src="viewer-assets/js/jquery-3.4.1.min.js"></script>
+<script src="viewer-assets/js/jquery.hotkeys.min.js"></script>
+<script src="viewer-assets/js/underscore.min.js"></script>
+<script src="viewer-assets/js/viewercontrol.js"></script>
+<script src="viewer-assets/js/viewer.js"></script>
+<script src="viewer-assets/js/viewerCustomizations.js"></script>
+<script type="text/javascript">
+ $(function() {
+          $('#viewer').pccViewer({
+            documentID: 'uIFEFPTIFvEb7-b4gptFfQleJz227bLhkDYtjGsypDS0Hr05YHiQDyJIFmt0GzGjKHcyHSRtyjzFU8hn-Z0zRiQ',
+            imageHandlerUrl: 'viewer-webtier/pas.php',
+            viewerAssetsPath: 'viewer-assets',
+            language: window.viewerCustomizations.languages['en-US'],
+            template: window.viewerCustomizations.template,
+            icons: window.viewerCustomizations.icons,
+            annotationsMode: 'LayeredAnnotations'
+          });
+        });
+</script>
+</head>
+<body>
+
+</body>
+</html>
+
+

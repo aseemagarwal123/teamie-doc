@@ -1,0 +1,10 @@
+.viewerWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #ddd;
+}
+
+.pcc-conversation.pcc-conversation-selected {
+  box-shadow: 3px 3px 3px 3px black;
+}

@@ -1,0 +1,66 @@
+diff -r b3f8b25ddb7e -r a629bd451cfa viewer-assets/templates/contextMenuTemplate.html
+--- a/viewer-assets/templates/contextMenuTemplate.html	Fri Dec 01 18:29:55 2017 +0800
++++ b/viewer-assets/templates/contextMenuTemplate.html	Tue Dec 19 12:33:45 2017 +0800
+@@ -1,5 +1,5 @@
+ <div class="pcc-pull-right">
+-    <button class="pcc-icon pcc-icon-list" title="<%= annotationOptions %>" data-pcc-toggle="context-menu-options"></button>
++    <!-- <button class="pcc-icon pcc-icon-list" title="<%= annotationOptions %>" data-pcc-toggle="context-menu-options"></button> -->
+     <button class="pcc-icon pcc-icon-updown" title="<%= moveContext %>" data-pcc-move-context-menu></button>
+ </div>
+ <div class="pcc-pull-left" data-pcc-toggle-id="context-menu-options"<% if (menuOptions.collapseLeftSide === true) { %> style="width:auto"<% } %>>
+@@ -49,12 +49,12 @@
+             </div>
+             <% } %>
+ 
+-            <% if (menuOptions.showLayerTab === true) { %>
++            <!-- <% if (menuOptions.showLayerTab === true) { %>
+             <div data-pcc-toggle="context-menu-tab4" title="<%= layerOrder %>"
+                  <% if (menuOptions.activateLayerTab === true) { %> class="pcc-active"<% } %>>
+                  <span class="pcc-icon pcc-icon-layer-front"></span>
+             </div>
+-            <% } %>
++            <% } %> -->
+ 
+             <% if (menuOptions.showESignTab === true) { %>
+             <div data-pcc-toggle="context-menu-tab5" class="pcc-active" title="<%= currentSignature %>">
+@@ -70,7 +70,7 @@
+             
+             <% if (menuOptions.showImageTab === true) { %>
+             <div data-pcc-toggle="context-menu-tab7" class="pcc-active">
+-                <span class="pcc-icon pcc-icon-image-stamp"></span>    
++                <span class="pcc-icon pcc-icon-check"></span>    
+             </div>
+             <% } %>
+ 
+@@ -129,7 +129,7 @@
+             </div>
+             <% } %>
+ 
+-            <% if (mark.getOpacity) { %>
++            <!-- <% if (mark.getOpacity) { %>
+             <div class="pcc-select pcc-select-opacity" data-pcc-fill-opacity data-pcc-toggle="dropdown-fill-opacity" title="<%= fillOpacityMenuItem %>">
+                 <div class="pcc-icon pcc-icon-opacity"></div>
+                 <div class="pcc-label"><%= Math.round(parseInt(mark.getOpacity() / 2.55, 10) / 10) * 10 %>%</div>
+@@ -148,7 +148,7 @@
+                     <div><span class="pcc-option pcc-option100"></span> <%= opacityOptions.item10 %></div>
+                 </div>
+             </div>
+-            <% } %>
++            <% } %> -->
+ 
+             <% if (mark.getThickness) { %>
+             <div class="pcc-select pcc-select-border" data-pcc-border-width data-pcc-toggle="dropdown-border" title="<%= borderWidth %>">
+@@ -370,11 +370,11 @@
+         <% } %>
+     </div>
+ 
+-    <% if (mark.getType().match(/annotation/i)) { %>
++    <!-- <% if (mark.getType().match(/annotation/i)) { %>
+     <div class="pcc-row">
+         <div data-pcc-checkbox="includeInBurnedDocument" class="pcc-checkbox<% if (mark.getData('Accusoft-burnAnnotation')) { %> pcc-checked<% } %>">
+             <span></span><label><%= includeInBurnedDocument %></label>
+         </div>
+     </div>
+-    <% } %>
++    <% } %> -->
+ </div>

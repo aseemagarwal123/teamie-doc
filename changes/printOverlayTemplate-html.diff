@@ -1,0 +1,72 @@
+diff -r b3f8b25ddb7e -r a629bd451cfa viewer-assets/templates/printOverlayTemplate.html
+--- a/viewer-assets/templates/printOverlayTemplate.html	Fri Dec 01 18:29:55 2017 +0800
++++ b/viewer-assets/templates/printOverlayTemplate.html	Tue Dec 19 12:33:45 2017 +0800
+@@ -91,7 +91,7 @@
+     </div>
+ 
+     <% if (canPrintMarks) { %>
+-    <div class="pcc-print-more-options pcc-row pcc-hide">
++    <div class="pcc-print-more-options pcc-row">
+         <div class="pcc-col-6">
+             <div class="pcc-row">
+                 <span><%= printShow %></span>
+@@ -104,18 +104,18 @@
+             </div>
+ 
+             <!--Redactions-->
+-            <div class="pcc-row">
++            <!-- <div class="pcc-row">
+                 <div data-pcc-checkbox="printRedactions" class="pcc-checkbox pcc-checked">
+                     <span></span><label><%= printRedactions %></label>
+                 </div>
+-            </div>
++            </div> -->
+ 
+             <!--printRedactionViewMode-->
+-            <div class="pcc-row">
++            <!-- <div class="pcc-row">
+                 <div data-pcc-checkbox="printRedactionViewMode" class="pcc-checkbox">
+                     <span></span><label><%= printRedactionViewMode %></label>
+                 </div>
+-            </div>
++            </div> -->
+ 
+         </div>
+ 
+@@ -131,13 +131,13 @@
+                 </div>
+                 <div class="pcc-row">
+                     <select data-pcc-select="printComments" class="pcc-print-select">
+-                        <option value="none"><%= printCommentsNone %></option>
+                         <option value="followingPage"><%= printCommentsAfterEachPage %></option>
+                         <option value="documentEnd"><%= printCommentsAtEnd %></option>
++                        <option value="none"><%= printCommentsNone %></option>
+                     </select>
+                 </div>
+             </div>
+-            <div class="pcc-print-marks pcc-row">
++            <!-- <div class="pcc-print-marks pcc-row">
+                 <div class="pcc-row">
+                     <h4><%= printReasons %></h4>
+                 </div>
+@@ -149,7 +149,7 @@
+                         <option value="documentEnd"><%= printReasonsAtEnd %></option>
+                     </select>
+                 </div>
+-            </div>
++            </div> -->
+         </div>
+     </div>
+     <% } %> <!--if (canPrintMarks)-->
+@@ -159,8 +159,9 @@
+         <% if (canPrintMarks) { %>
+         <div class="pcc-col-6">
+             <div class="pcc-toggle-options" data-pcc-print="optionsToggle">
+-                <label><%= printMoreOptions %></label>
+-                <span class="pcc-arrow-down"></span>
++                <span style="font-size: smaller;">To Download file, change <b>print destination</b> to <b>Save as PDF</b> after clicking Print</span>
++                <!-- <label><%= printMoreOptions %></label>
++                <span class="pcc-arrow-down"></span> -->
+             </div>
+         </div>
+         <div class="pcc-col-6">
